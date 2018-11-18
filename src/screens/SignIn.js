@@ -85,29 +85,6 @@ const Title = styled.Text`
   font-family: AvenirMedium;
 `;
 
-// const xstyles = StyleSheet.create({
-//   button: {
-//     borderRadius: 26,
-//     paddingVertical: 12,
-//     paddingHorizontal: 38,
-//     ...Platform.select({
-//       ios: {
-//         backgroundColor: 'tomato'
-//       },
-//       android: {
-//         //#dd9f7e
-//         backgroundColor: '#dd9f7e'
-//       },
-//       default: {}
-//     })
-//   },
-//   buttonText: {
-//     fontSize: 21,
-//     color: '#fff',
-//     fontFamily: 'AvenirLight'
-//   }
-// });
-
 export default connect(
   state => ({
     user: state.auth.user

@@ -1,91 +1,79 @@
-import React, { Component } from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
-import ActivityListItem from "../components/ActivityListItem";
-import SignOutButton from "../components/SignOutButton";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import * as activityActions from "../dux/activities";
-import * as categoryActions from "../dux/categories";
-import * as sportActions from "../dux/sports";
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
+import ActivityListItem from '../components/ActivityListItem';
+import SignOutButton from '../components/SignOutButton';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as activityActions from '../dux/activities';
+import * as categoryActions from '../dux/categories';
+import * as sportActions from '../dux/sports';
+import * as styles from '../styles';
+import styled from 'styled-components';
+import LinearGradient from 'react-native-linear-gradient';
 
 class Main extends Component {
   static navigationOptions = {
     headerRight: <SignOutButton />,
-    title: "Aktiviteetit",
+    title: 'Aktiviteetit',
     headerLeft: <View />,
-    headerTitleStyle: { alignSelf: "center", paddingStart: 67 }
+    ...styles.headerStyles
   };
 
   state = {};
 
   componentDidMount() {
-    this.props.fetchActivities(this.props.user);
+    this.props.fetchActivities(this.props.user._id);
     this.props.fetchSports();
     this.props.fetchCategories();
   }
 
-  extractKey = activity => activity.id.toString();
+  extractKey = activity => activity._id;
 
   getItemLayout = (data, index) => ({
-    length: 60 + StyleSheet.hairlineWidth,
-    offset: (60 + StyleSheet.hairlineWidth) * index,
+    length: 80 + StyleSheet.hairlineWidth,
+    offset: (80 + StyleSheet.hairlineWidth) * index,
     index
   });
 
   renderActivityItem = ({ item: activity }) => {
-    return (
-      <ActivityListItem
-        sports={this.props.sports}
-        {...activity}
-        onPress={this.handleActivityPress(activity)}
-      />
-    );
+    return <ActivityListItem {...activity} onPress={this.handleActivityPress(activity)} />;
   };
 
   handleActivityPress = activity => () => {
-    const updated = {
-      ...activity,
-      sport: this.props.sports.find(s => s.id === activity.sport_id).name
-    };
-    this.props.navigation.navigate("Activity", { activity: updated });
+    this.props.navigation.navigate('Activity', { activity });
   };
 
   render() {
     return (
-      <View style={styles.container}>
-        <FlatList
-          style={styles.activitiesList}
+      <LinearGradient colors={styles.gradients} style={{ flex: 1 }}>
+        <CustomFlatList
           data={this.props.activities}
           renderItem={this.renderActivityItem}
           keyExtractor={this.extractKey}
           getItemLayout={this.getItemLayout}
-          ItemSeparatorComponent={<View style={styles.separator} />}
+          ItemSeparatorComponent={() => <Separator />}
         />
-      </View>
+      </LinearGradient>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#dfdfdf"
-  },
-  activitiesList: {
-    flex: 1
-  },
-  separator: {
-    height: StyleSheet.hairlineWidth,
-    backgroundColor: "#000"
-  }
-});
+const Separator = styled.View`
+  height: ${StyleSheet.hairlineWidth};
+  width: 95%;
+  margin: auto;
+  background-color: ${styles.colors.lightGray};
+`;
+
+const CustomFlatList = styled.FlatList`
+  display: flex;
+`;
 
 export default connect(
   state => ({
     activities: state.activities.activities,
     sports: state.sports.sports,
     categories: state.categories.categories,
-    loggedIn: state.auth.loggedIn,
     user: state.auth.user
   }),
   dispatch =>

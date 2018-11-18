@@ -1,17 +1,15 @@
-import React, { Component } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import moment from "moment";
-import * as activityActions from "../dux/activities";
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, Button } from 'react-native';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import moment from 'moment';
+import * as activityActions from '../dux/activities';
 
 class Activity extends Component {
   static navigationOptions = ({ navigation }) => {
     const { activity } = navigation.state.params;
     return {
-      title: `${activity.sport} ${moment(activity.time_of_completion).format(
-        "DD.MM.YYYY"
-      )}`,
+      title: `${activity.sport.name} ${moment(activity.date).format('DD.MM.YYYY')}`,
 
       headerRight: <View />
     };
@@ -20,7 +18,7 @@ class Activity extends Component {
   state = {};
 
   render() {
-    const activity = this.props.navigation.getParam("activity", {});
+    const activity = this.props.navigation.getParam('activity', {});
     return <View />;
   }
 }

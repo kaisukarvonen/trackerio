@@ -23,7 +23,9 @@ export default function(state = defaultState, action) {
 
 function* fetchActivitiesWorker(action) {
   try {
+    console.log(action.userId);
     const response = yield call(fetch, action.userId);
+    console.log(response.data);
     yield put(fetchedActivities(response.data));
   } catch (e) {}
 }

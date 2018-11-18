@@ -5,7 +5,6 @@ import styled, { css } from 'styled-components';
 
 class ButtonClass extends Component {
   render() {
-    console.log(this.props.color);
     return (
       <CustomButton style={this.props.style} onPress={this.props.onPress} color={this.props.color}>
         <ButtonText>{this.props.content}</ButtonText>

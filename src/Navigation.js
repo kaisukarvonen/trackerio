@@ -1,21 +1,17 @@
-import React, { Component } from "react";
-import {
-  createStackNavigator,
-  createSwitchNavigator,
-  createBottomTabNavigator
-} from "react-navigation";
-import Icon from "react-native-vector-icons/FontAwesome";
-import Main from "./screens/Main";
-import Activity from "./screens/Activity";
-import SignIn from "./screens/SignIn";
-import Loading from "./screens/Loading";
-import Settings from "./screens/Settings";
+import React, { Component } from 'react';
+import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator } from 'react-navigation';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Main from './screens/Main';
+import Activity from './screens/Activity';
+import SignIn from './screens/SignIn';
+import Loading from './screens/Loading';
+import Settings from './screens/Settings';
+import * as styles from './styles';
 
 const icons = {
-  Aktiviteetit: <Icon name="list" size={24} />,
-  Settings: ({ tintColor }) => (
-    <Icon name="md-settings" size={24} color={tintColor} />
-  )
+  Aktiviteetit: ({ tintColor }) => <Icon name="list-ul" size={22} color={tintColor} />,
+  Lajit: ({ tintColor }) => <Icon name="futbol-o" size={22} color={tintColor} />,
+  Kategoriat: ({ tintColor }) => <Icon name="tags" size={22} color={tintColor} />
 };
 
 const App = createStackNavigator({
@@ -25,13 +21,12 @@ const App = createStackNavigator({
 
 const Tabs = createBottomTabNavigator(
   {
-    Aktiviteetit: { screen: App }
-    // Settings
+    Aktiviteetit: { screen: App },
+    Lajit: { screen: Settings },
+    Kategoriat: { screen: App }
   },
   {
-    tabBarOptions: {
-      activeTintColor: "#000"
-    },
+    tabBarOptions: styles.tabBarOptions,
     navigationOptions: ({ navigation }) => {
       const {
         state: { routeName }
@@ -49,5 +44,5 @@ export default createSwitchNavigator(
     Tabs,
     Loading
   },
-  { initialRouteName: "Loading" }
+  { initialRouteName: 'Loading' }
 );
