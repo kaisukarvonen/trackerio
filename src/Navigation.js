@@ -3,6 +3,7 @@ import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator }
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Main from './screens/Main';
 import Activity from './screens/Activity';
+import NewActivity from './screens/NewActivity';
 import SignIn from './screens/SignIn';
 import Loading from './screens/Loading';
 import Settings from './screens/Settings';
@@ -16,7 +17,8 @@ const icons = {
 
 const App = createStackNavigator({
   Main,
-  Activity
+  Activity,
+  NewActivity
 });
 
 const Tabs = createBottomTabNavigator(

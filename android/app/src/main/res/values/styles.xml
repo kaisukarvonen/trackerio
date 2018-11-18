@@ -2,7 +2,16 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:colorControlNormal">#FFFFFF</item>
+
+    <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
+
+    </style>
+
         <!-- Customize your theme here. -->
+    <style name="SpinnerItem" parent="Theme.AppCompat.Light.NoActionBar">>
+    <!-- <item name="android:fontFamily">@font/AvenirLight</item> -->
+    <item name="android:textSize">19dp</item>
     </style>
 
 </resources>

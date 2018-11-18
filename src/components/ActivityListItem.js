@@ -5,16 +5,11 @@ import * as styles from '../styles';
 import { weekDays } from '../utils/date';
 import styled, { css } from 'styled-components';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { getTime } from '../utils/time';
 
 export default class ActivityListItem extends Component {
   handlePress = () => {
     this.props.onPress();
-  };
-
-  getTime = duration => {
-    const hours = duration.hours ? `${duration.hours} h` : '';
-    const minutes = duration.minutes ? `${duration.minutes} min` : '';
-    return `${hours} ${minutes}`;
   };
 
   render() {
@@ -26,16 +21,16 @@ export default class ActivityListItem extends Component {
             <WeekDay>{weekDays[moment(date).format('e')]}</WeekDay>
             <DateText>{moment(date).format('DD.M')}</DateText>
           </View>
-          <View>
+          <View style={{ width: 140 }}>
             <Sport>{sport.name.toUpperCase()}</Sport>
             <InlineContainer>
               <Icon name="map-marker" size={18} color={styles.colors.lightGray} />
               <SmallText>{place}</SmallText>
             </InlineContainer>
           </View>
-          <InlineContainer>
+          <InlineContainer style={{ width: 90 }}>
             <Icon name="clock-o" size={18} color={styles.colors.lightGray} />
-            <SmallText>{this.getTime(duration)}</SmallText>
+            <SmallText>{getTime(duration)}</SmallText>
           </InlineContainer>
         </ListItem>
       </TouchableHighlight>

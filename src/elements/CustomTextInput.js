@@ -11,25 +11,34 @@ class TextInputClass extends Component {
 
   render() {
     return (
-      <Container style={this.props.style}>
-        {this.props.icon && <Icon name={this.props.icon} color={styles.colors.orange} size={24} />}
-        <StyledTextInput
-          value={this.props.value}
-          onChangeText={val => this.handleInput(val)}
-          placeholder={this.props.placeholder}
-          placeholderTextColor={styles.colors.lightGray}
-          autoCapitalize="none"
-          secureTextEntry={this.props.secureTextEntry}
-        />
-      </Container>
+      <View>
+        {this.props.label && <Label>{this.props.label}</Label>}
+        <Container style={this.props.style}>
+          {this.props.icon && <Icon name={this.props.icon} color={styles.colors.orange} size={24} style={{ paddingEnd: 8 }} />}
+          <StyledTextInput
+            value={this.props.value}
+            onChangeText={val => this.handleInput(val)}
+            placeholder={this.props.placeholder}
+            placeholderTextColor={'#79757a'}
+            autoCapitalize="none"
+            secureTextEntry={this.props.secureTextEntry}
+          />
+        </Container>
+      </View>
     );
   }
 }
 
+const Label = styled.Text`
+  color: ${styles.colors.lightGray};
+  font-family: AvenirLight;
+  font-size: 16;
+`;
+
 const Container = styled.View`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   border-bottom-color: ${styles.colors.lightGray};
   border-bottom-width: 1;
@@ -37,11 +46,9 @@ const Container = styled.View`
 `;
 
 const StyledTextInput = styled.TextInput`
-  font-size: 21;
+  font-size: 20;
   font-weight: 200;
-  padding-start: 8px;
   padding-vertical: 0;
-  margin: 5px;
   color: #eee;
   font-family: AvenirLight;
   width: 290px;

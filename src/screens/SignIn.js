@@ -35,7 +35,7 @@ class SignIn extends Component {
 
   render() {
     return (
-      <LinearGradient colors={['#49536A', '#4c546d', '#6D697C', '#988d9c', '#B2A8AF']} style={{ flex: 1 }}>
+      <LinearGradient colors={styles.gradients} style={{ flex: 1 }}>
         <StyledKeyboardAvoidingView enabled={!IS_ANDROID} behavior="padding">
           <MainView>
             <Title>Trackerio</Title>
