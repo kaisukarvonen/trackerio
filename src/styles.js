@@ -1,7 +1,9 @@
 import { css } from 'styled-components';
 
 // #535162, #605a69, #6c6370
-export const gradients = ['#384154', '#3e4154', '#404356', '#505366', '#535162', '#605a69', '#6c6370'];
+//background-image: linear-gradient(to bottom, #384154, #434759, #4d4d5f, #575364, #605a69);
+//background-image: linear-gradient(to bottom, #384154, #434759, #4d4d5f, #575364, #605a69);
+export const gradients = ['#384154', '#3e4154', '#404356', '#434759', '#4d4d5f', '#535162', '#605a69', '#6c6370'];
 export const colors = { darkBackground: '#384154', background: '#49536A', primary: '#F49D6E', lightGray: '#bbb4bd', orange: '#bf957e' };
 
 export const headerStyles = {
