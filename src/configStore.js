@@ -1,18 +1,18 @@
-import { compose, createStore, applyMiddleware } from "redux";
-import rootReducer from "./dux/rootReducer";
-import { persistStore, persistCombineReducers } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import hardSet from "redux-persist/lib/stateReconciler/hardSet";
+import { compose, createStore, applyMiddleware } from 'redux';
+import rootReducer from './dux/rootReducer';
+import { persistStore, persistCombineReducers } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
 
-import createSagaMiddleware from "redux-saga";
-import rootSaga from "./dux/rootSaga";
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './dux/rootSaga';
 
 const persistConfig = {
-  key: "root",
+  key: 'root',
   storage: storage,
   stateReconciler: hardSet,
   version: 0,
-  keyPrefix: ""
+  keyPrefix: ''
 };
 
 export default function configureStore(initialState = {}) {

@@ -1,114 +1,117 @@
-import React, { Component } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform
-} from "react-native";
-import { RectButton } from "react-native-gesture-handler";
-// import authService from "../services/authService";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import * as authActions from "../dux/auth";
+import React, { Component } from 'react';
+import { View, Platform } from 'react-native';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as authActions from '../dux/auth';
+import * as styles from '../styles';
+import styled, { css } from 'styled-components';
+import { CustomTextInput } from '../elements/CustomTextInput';
+import { Button } from '../elements/Button';
+import LinearGradient from 'react-native-linear-gradient';
 
-const IS_ANDROID = Platform.OS === "android";
+const IS_ANDROID = Platform.OS === 'android';
 
 class SignIn extends Component {
-  state = { username: "", password: "" };
+  state = { username: '', password: '' };
 
-  handleInput = key => value => {
-    this.setState(state => ({
+  componentDidUpdate = prevProps => {
+    if (prevProps.user !== this.props.user && this.props.user) {
+      this.props.navigation.navigate('Tabs');
+    }
+  };
+
+  handleInput = (value, key) => {
+    this.setState({
       [key]: value
-    }));
+    });
   };
 
   handleSignIn = async () => {
     const { username, password } = this.state;
-    if (username && password) {
-      this.props.login(username);
-      this.props.navigation.navigate("Tabs");
+    if (!!username && !!password) {
+      this.props.logIn({ username, password });
     }
   };
 
   render() {
     return (
-      <KeyboardAvoidingView
-        style={styles.container}
-        enabled={!IS_ANDROID}
-        behavior="padding"
-      >
-        <View style={styles.container}>
-          <Text style={styles.title}>Trackerio</Text>
-          <View>
-            <TextInput
-              value={this.state.username}
-              style={styles.input}
-              onChangeText={this.handleInput("username")}
-              placeholder="Käyttäjätunnus"
-              autoCapitalize="none"
-            />
-            <TextInput
-              value={this.state.password}
-              style={styles.input}
-              onChangeText={this.handleInput("password")}
-              placeholder="Salasana"
-              secureTextEntry
-            />
-          </View>
-          <RectButton style={styles.button} onPress={this.handleSignIn}>
-            <Text style={styles.buttonText}>Kirjaudu sisään</Text>
-          </RectButton>
-        </View>
-      </KeyboardAvoidingView>
+      <LinearGradient colors={['#49536A', '#4c546d', '#6D697C', '#988d9c', '#B2A8AF']} style={{ flex: 1 }}>
+        <StyledKeyboardAvoidingView enabled={!IS_ANDROID} behavior="padding">
+          <MainView>
+            <Title>Trackerio</Title>
+            <View>
+              <CustomTextInput
+                value={this.state.username}
+                onChangeText={val => this.handleInput(val, 'username')}
+                icon="user"
+                placeholder="Käyttäjätunnus"
+              />
+              <CustomTextInput
+                value={this.state.password}
+                onChangeText={val => this.handleInput(val, 'password')}
+                icon="lock"
+                secureTextEntry
+                placeholder="Salasana"
+              />
+            </View>
+            <Button onPress={this.handleSignIn} content="Kirjaudu sisään" />
+          </MainView>
+        </StyledKeyboardAvoidingView>
+      </LinearGradient>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "space-around",
-    alignItems: "center",
-    backgroundColor: "#dfdfdf"
-  },
-  title: {
-    fontSize: 29,
-    fontWeight: "600",
-    textShadowOffset: { width: 3, height: 3 },
-    textShadowRadius: 13,
-    textShadowColor: "#999"
-  },
-  button: {
-    borderRadius: 26,
-    paddingVertical: 12,
-    paddingHorizontal: 38,
-    ...Platform.select({
-      ios: {
-        backgroundColor: "tomato"
-      },
-      android: {
-        backgroundColor: "#82B3AE"
-      },
-      default: {}
-    })
-  },
-  buttonText: {
-    fontSize: 22,
-    color: "#fff"
-  },
-  input: {
-    width: 290,
-    padding: 8,
-    fontSize: 19,
-    borderBottomColor: "#666",
-    borderBottomWidth: 1
-  }
-});
+const mainContainer = css`
+  display: flex;
+  flex: 1;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+
+const MainView = styled.View`
+  ${mainContainer};
+`;
+
+const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView`
+  ${mainContainer};
+`;
+
+const Title = styled.Text`
+  font-size: 45;
+  letter-spacing: 2;
+  color: ${styles.colors.primary};
+  font-weight: 200;
+  font-family: AvenirMedium;
+`;
+
+// const xstyles = StyleSheet.create({
+//   button: {
+//     borderRadius: 26,
+//     paddingVertical: 12,
+//     paddingHorizontal: 38,
+//     ...Platform.select({
+//       ios: {
+//         backgroundColor: 'tomato'
+//       },
+//       android: {
+//         //#dd9f7e
+//         backgroundColor: '#dd9f7e'
+//       },
+//       default: {}
+//     })
+//   },
+//   buttonText: {
+//     fontSize: 21,
+//     color: '#fff',
+//     fontFamily: 'AvenirLight'
+//   }
+// });
 
 export default connect(
-  state => ({}),
+  state => ({
+    user: state.auth.user
+  }),
   dispatch =>
     bindActionCreators(
       {

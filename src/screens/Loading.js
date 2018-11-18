@@ -1,15 +1,13 @@
-import React, { Component } from "react";
-import { View, StyleSheet, ActivityIndicator } from "react-native";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { connect } from 'react-redux';
 
 class Loading extends Component {
   componentDidMount() {
-    console.log("halooooo");
-    console.log(this.props.loggedIn);
-    if (this.props.loggedIn) {
-      this.props.navigation.navigate("Tabs");
+    if (this.props.user) {
+      this.props.navigation.navigate('Tabs');
     } else {
-      this.props.navigation.navigate("SignIn");
+      this.props.navigation.navigate('SignIn');
     }
   }
 
@@ -25,14 +23,14 @@ class Loading extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
 export default connect(
   state => ({
-    loggedIn: state.auth.loggedIn
+    user: state.auth.user
   }),
   dispatch => ({})
 )(Loading);
